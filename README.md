@@ -1,5 +1,5 @@
 # docker-nginx
-[![Drone (cloud)](https://img.shields.io/drone/build/jee-r/docker-nginx?style=flat-square)](https://cloud.drone.io/jee-r/docker-nginx)
+[![Drone (self-hosted)](https://img.shields.io/drone/build/docker/nginx?server=https%3A%2F%2Fdrone.c0de.in&style=flat-square)](https://drone.c0de.in/docker/nginx)
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/j33r/nginx?style=flat-square)](https://microbadger.com/images/j33r/nginx)
 [![MicroBadger Layers](https://img.shields.io/microbadger/layers/j33r/nginx?style=flat-square)](https://microbadger.com/images/j33r/nginx)
 [![Docker Pulls](https://img.shields.io/docker/pulls/j33r/nginx?style=flat-square)](https://hub.docker.com/r/j33r/nginx)
