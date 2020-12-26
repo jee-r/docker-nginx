@@ -6,7 +6,8 @@ ARG GROUP_NAME=${GROUP_NAME:-php}
 
 USER root
 
-RUN apk update && \
+RUN sed -i 's/http:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.ircam.fr\/pub/' /etc/apk/repositories && \
+    apk update && \
     apk upgrade && \
     apk --no-cache add shadow && \
     echo "Add Group ${GROUP_NAME} with gid ${GID}" && \
