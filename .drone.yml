@@ -2,7 +2,6 @@ kind: pipeline
 name: c0de.in
 type: kubernetes
 
-trigger:
   instance:
     - drone.c0de.in
 
@@ -19,7 +18,9 @@ steps:
   when:
     branch:
       - master
-    event:
+   instance:
+    - drone.c0de.in
+   event:
       exclude:
         - pull_request
 
@@ -35,6 +36,8 @@ steps:
   when:
     branch:
       - dev
+    instance:
+      - drone.c0de.in
     event:
       exclude:
         - pull_request
@@ -50,7 +53,9 @@ steps:
       from_secret: DOCKER_HUB_TOKEN
     dry_run: true
   when:
-    event:
+   instance:
+    - drone.c0de.in
+   event:
       - pull_request
 
 - name: mirroring_github
@@ -63,6 +68,8 @@ steps:
       from_secret: GITHUB_TOKEN
     GIT_MIRROR_REPO: github.com/jee-r/docker-nginx.git
   when:
+    instance:
+      - drone.c0de.in
     branch:
       - master
       - dev
@@ -80,6 +87,8 @@ steps:
       from_secret: FRAMAGIT_TOKEN
     GIT_MIRROR_REPO: framagit.org/jee/docker-nginx.git
   when:
+    instance:
+      - drone.c0de.in
     branch:
       - master
       - dev
@@ -93,10 +102,6 @@ kind: pipeline
 name: github
 type: docker
 
-trigger:
-  instance:
-    - cloud.drone.io
-
 steps:
 - name: build_multi
   image: plugins/docker:latest
@@ -108,6 +113,8 @@ steps:
     password:
       from_secret: DOCKER_HUB_TOKEN
   when:
+    instance:
+      - cloud.drone.io
     branch:
       - multi-drone
     event:
