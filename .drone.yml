@@ -4,7 +4,10 @@ type: kubernetes
 
 when:
   instance:
-    - drone.c0de.in
+    include:
+      - drone.c0de.in
+    exclude:
+      - cloud.drone.io
 
 steps:
 - name: build_master
@@ -92,10 +95,13 @@ steps:
 kind: pipeline                                                                                                                                                                                    
 name: github
 type: docker
- 
+
 when:
   instance:
-    - drone.c0de.in
+    include:
+      - cloud.drone.io
+    exclude:
+      - drone.c0de.in
 
 steps:
 - name: build_multi
