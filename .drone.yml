@@ -97,6 +97,7 @@ when:
   instance:
     - drone.c0de.in
 
+steps:
 - name: build_multi
   image: plugins/docker:latest
   settings:
