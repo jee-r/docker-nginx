@@ -15,9 +15,9 @@ steps:
   when:
     branch:
       - master
-   instance:
-    - drone.c0de.in
-   event:
+    instance:
+      - drone.c0de.in
+    event:
       exclude:
         - pull_request
 
@@ -50,9 +50,9 @@ steps:
       from_secret: DOCKER_HUB_TOKEN
     dry_run: true
   when:
-   instance:
-    - drone.c0de.in
-   event:
+    instance:
+      - drone.c0de.in
+    event:
       - pull_request
 
 - name: mirroring_github
