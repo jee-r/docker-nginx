@@ -1,6 +1,10 @@
 kind: pipeline
-name: default
+name: c0de.in
 type: kubernetes
+
+when:
+  instance:
+    - drone.c0de.in
 
 steps:
 - name: build_master
@@ -79,6 +83,32 @@ steps:
     branch:
       - master
       - dev
+    event:
+      exclude:
+        - pull_request
+
+---
+
+kind: pipeline                                                                                                                                                                                    
+name: github
+type: docker
+ 
+when:
+  instance:
+    - drone.c0de.in
+
+- name: build_multi
+  image: plugins/docker:latest
+  settings:
+    repo: j33r/nginx
+    tags: multi-drone
+    dockerfile: Dockerfile
+    username: j33r
+    password:
+      from_secret: DOCKER_HUB_TOKEN
+  when:
+    branch:
+      - multi-drone
     event:
       exclude:
         - pull_request
