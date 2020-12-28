@@ -6,7 +6,8 @@ steps:
 - name: tag
   image: alpine:latest
   commands: 
-    - echo -n $DRONE_BRANCH > .tags
+    commands:
+    - echo -n $DRONE_BRANCH, $DRONE_COMMIT_SHA > .tags
 
 - name: build
   image: plugins/docker:latest

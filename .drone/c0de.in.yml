@@ -1,0 +1,78 @@
+kind: pipeline
+name: c0de.in
+type: kubernetes
+
+steps:
+- name: tag
+  image: alpine:latest
+  commands:
+    - echo -n $DRONE_BRANCH, $DRONE_COMMIT_SHA > .tags
+
+- name: build
+  image: plugins/docker:latest
+  settings:
+    repo: j33r/nginx
+    dockerfile: Dockerfile
+    username: j33r
+    password:
+      from_secret: DOCKER_HUB_TOKEN
+  when:
+    instance:
+      - drone.c0de.in
+    event:
+      exclude:
+        - pull_request
+
+- name: test
+  image: plugins/docker:latest
+  settings:
+    repo: j33r/nginx
+    tags: latest
+    dockerfile: Dockerfile
+    username: j33r
+    password:
+      from_secret: DOCKER_HUB_TOKEN
+    dry_run: true
+  when:
+    instance:
+      - drone.c0de.in
+    event:
+      - pull_request
+
+- name: mirroring_github
+  pull: always
+  image: j33r/git-mirror:latest
+  failure: ignore
+  environment:
+    GIT_MIRROR_USER: jee-r
+    GIT_MIRROR_TOKEN:
+      from_secret: GITHUB_TOKEN
+    GIT_MIRROR_REPO: github.com/jee-r/docker-nginx.git
+  when:
+    instance:
+      - drone.c0de.in
+    branch:
+      - master
+      - dev
+    event:
+      exclude:
+        - pull_request
+
+- name: mirroring_framagit
+  pull: always
+  image: j33r/git-mirror:latest
+  failure: ignore
+  environment:
+    GIT_MIRROR_USER: jee
+    GIT_MIRROR_TOKEN:
+      from_secret: FRAMAGIT_TOKEN
+    GIT_MIRROR_REPO: framagit.org/jee/docker-nginx.git
+  when:
+    instance:
+      - drone.c0de.in
+    branch:
+      - master
+      - dev
+    event:
+      exclude:
+        - pull_request
