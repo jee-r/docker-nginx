@@ -5,8 +5,7 @@ type: docker
 steps:
 - name: tag
   image: alpine:latest
-  commands: 
-    commands:
+  commands:
     - echo -n $DRONE_BRANCH, $DRONE_COMMIT_SHA > .tags
 
 - name: build
