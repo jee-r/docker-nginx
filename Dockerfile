@@ -1,10 +1,14 @@
 FROM nginxinc/nginx-unprivileged:alpine
-LABEL maintainer="Jee"
 
-ARG GID=${GID:-1000}
-ARG GROUP_NAME=${GROUP_NAME:-php}
+LABEL name="docker-<PROJECT_NAME>" \
+      maintainer="Jee jee@jeer.fr" \
+      description="<PROJECT_SHORT_DESCRIPTION" \
+      url="<PROJECT_URL>" \
+      org.label-schema.vcs-url="https://github.com/jee-r/docker-<PROJECT_NAME>"
 
 USER root
+
+COPY rootfs /
 
 RUN sed -i 's/http:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.ircam.fr\/pub/' /etc/apk/repositories && \
     apk update && \
@@ -17,6 +21,3 @@ RUN sed -i 's/http:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.ircam.fr\/pub/' 
       GROUP_NAME=$(grep ':'${GID}':' /etc/group | cut -d: -f1); \
     fi && \
     usermod -a -G ${GID} nginx
-
-USER 101
-COPY ./default.conf /etc/nginx/conf.d/default.conf
